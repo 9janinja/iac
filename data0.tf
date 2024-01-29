@@ -22,3 +22,14 @@ data "aws_ami" "ubuntu" {
   }
 
 }
+
+data "template_cloudinit_config" "user-data" {
+  part {
+    content_type = "text/x-shellscript"
+    content      = file("${path.module}/ansible-install-ubuntu.sh")
+  }
+  part {
+    content_type = "text/x-shellscript"
+    content      = file("${path.module}/vscode-install.sh")
+  }
+}

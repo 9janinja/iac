@@ -13,6 +13,7 @@ variable "my_key" {
   default = "auto"
 }
 
+#Specify your pc's OS
 variable "os" {
   type    = string
   default = "windows"
