@@ -24,11 +24,11 @@
         - php-gd
         - php-curl
         - php-mysql
-        - php libapache2-mod-php
+        - php-fpm
     
     - name: Copy php config files
       copy:
-        src: ".ansible/files/php.conf"
+        src: "./lamp-stack/php.conf"
         dest: "/etc/php-fpm.d/www.conf"
         mode: 0644
 
@@ -49,7 +49,7 @@
 
     - name: Copy nginx config files
       copy:
-        src: ".ansible/files/nginx.conf"
+        src: "./lamp-stack/nginx.conf"
         dest: "/etc/nginx/nginx.conf"
         mode: 0644
 
@@ -59,7 +59,7 @@
         state: directory
 
     - name: make the build package
-      local_action: shell tar -c -z -f app.zip -C ./files/php .
+      local_action: shell tar -c -z -f app.zip -C ./lamp-stack/php .
       become: no
 
     - name: Copy build package
@@ -78,7 +78,7 @@
 
     - name: Update application nginx config
       copy: 
-        src: ".ansible/files/application.conf"
+        src: "./lamp-stack/application.conf"
         dest: "/etc/nginx/conf.d/app.conf"
         mode: 0644
 
@@ -120,7 +120,7 @@
           EOF
     - name: Copy DB DDL file
       copy:
-        src: ".ansible/files/user_management.sql"
+        src: "./lamp-stack/user_management.sql"
         dest: "/home/ansible/user_management.sql"
         mode: 0644
     - name: Build database tables
